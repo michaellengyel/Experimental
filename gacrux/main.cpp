@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "modules/Gaussian_Distribution.h"
+#include "modules/math/Gaussian_Distribution.h"
 
 int main() {
 
