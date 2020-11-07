@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "modules/math/Gaussian_Distribution.h"
+#include "math/Gaussian_Distribution.h"
+#include "logger/Logger.h"
 
 int main() {
 
@@ -18,6 +19,10 @@ int main() {
 
     std::cout << "Output of sigma multiplication: " << output2.getSigma() << std::endl;
     std::cout << "Output of mu multiplication: " << output2.getMu() << std::endl;
+
+    // Testing Logging module
+    Logger logger;
+    logger.log("Logger working as expected");
 
     return 0;
 }
