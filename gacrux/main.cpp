@@ -2,6 +2,7 @@
 
 #include "math/Gaussian_Distribution.h"
 #include "logger/Logger.h"
+#include <GLFW/glfw3.h>
 
 int main() {
 
@@ -23,6 +24,32 @@ int main() {
     // Testing Logging module
     Logger logger;
     logger.log("Logger working as expected");
+
+    // Testing GLFW lib
+    GLFWwindow *window;
+
+    if(!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        exit(EXIT_FAILURE);
+    }
+
+    window = glfwCreateWindow(680, 460, "test", NULL, NULL);
+    if(!window) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+
+    // main loop
+    while(!glfwWindowShouldClose(window)) {
+        //draw();
+        //animate();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
 
     return 0;
 }

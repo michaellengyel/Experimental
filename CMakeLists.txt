@@ -8,15 +8,23 @@ set(CMAKE_CXX_STANDARD 14)
 
 # adding subdirectories
 add_subdirectory(gacrux)
+#add_subdirectory(gacrux/vendor/glfw)
 
 # declaring the math library
 
 # add the executable
-add_executable(Experimental gacrux/main.cpp)
+add_executable(${PROJECT_NAME} gacrux/main.cpp)
+
+# add include directories
+target_include_directories(${PROJECT_NAME} PUBLIC gacrux/vendor/glfw/include)
+
+# add link to directories
+target_link_directories(${PROJECT_NAME} PRIVATE gacrux/vendor/glfw/src)
 
 # link library to executable
-target_link_libraries(Experimental PRIVATE math)
-target_link_libraries(Experimental PRIVATE logger)
+target_link_libraries(${PROJECT_NAME} math)
+target_link_libraries(${PROJECT_NAME} logger)
+target_link_libraries(${PROJECT_NAME} glfw)
 
 # based on guide:
 # https://www.youtube.com/watch?v=SYgESCQeGJY

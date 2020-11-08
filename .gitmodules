@@ -1,0 +1,3 @@
+[submodule "gacrux/vendor/glfw"]
+	path = gacrux/vendor/glfw
+	url = https://github.com/glfw/glfw.git

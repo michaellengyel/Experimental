@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/michael/git/Experimental/gacrux/logger/Logger.cpp
+Logger.h
+/home/michael/git/Experimental/gacrux/logger/Logger.h
+
+/home/michael/git/Experimental/gacrux/logger/Logger.h
+string
+-
+iostream
+-
+
