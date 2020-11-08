@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/Experimental.dir/gacrux/main.cpp.o  -o Experimental  -L/home/michael/git/Experimental/gacrux/vendor/glfw/src -Wl,-rpath,/home/michael/git/Experimental/gacrux/vendor/glfw/src gacrux/math/libmath.a gacrux/logger/liblogger.a gacrux/vendor/glfw/src/libglfw3.a -lpthread /usr/lib/x86_64-linux-gnu/librt.so -lm -ldl 
