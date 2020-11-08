@@ -25,6 +25,3 @@ target_link_directories(${PROJECT_NAME} PRIVATE gacrux/vendor/glfw/src)
 target_link_libraries(${PROJECT_NAME} math)
 target_link_libraries(${PROJECT_NAME} logger)
 target_link_libraries(${PROJECT_NAME} glfw)
-
-# based on guide:
-# https://www.youtube.com/watch?v=SYgESCQeGJY

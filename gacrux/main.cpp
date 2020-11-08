@@ -6,6 +6,8 @@
 
 int main() {
 
+    // Testing Math module...
+
     std::cout << "Test code running..." << std::endl;
 
     Gaussian_Distribution first(3.445, 4.234);
@@ -21,11 +23,13 @@ int main() {
     std::cout << "Output of sigma multiplication: " << output2.getSigma() << std::endl;
     std::cout << "Output of mu multiplication: " << output2.getMu() << std::endl;
 
-    // Testing Logging module
+    // Testing Logging module...
+
     Logger logger;
     logger.log("Logger working as expected");
 
-    // Testing GLFW lib
+    // Testing GLFW module...
+
     GLFWwindow *window;
 
     if(!glfwInit()) {
@@ -40,8 +44,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-
-    // main loop
+    // Main loop
     while(!glfwWindowShouldClose(window)) {
         //draw();
         //animate();
@@ -49,6 +52,7 @@ int main() {
         glfwPollEvents();
     }
 
+    // Terminate GLFW
     glfwTerminate();
 
     return 0;
