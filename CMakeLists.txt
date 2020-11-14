@@ -9,7 +9,7 @@ set(OpenCV_DIR /home/michael/libraries/build)
 
 # adding subdirectories
 add_subdirectory(gacrux)
-#add_subdirectory(gacrux/vendor/glfw)
+add_subdirectory(gacrux/vendor/glfw)
 
 # declaring the math library
 
@@ -23,6 +23,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC gacrux/vendor/glfw/include)
 target_link_directories(${PROJECT_NAME} PRIVATE gacrux/vendor/glfw/src)
 
 # link library to executable
+target_link_libraries(${PROJECT_NAME} io)
 target_link_libraries(${PROJECT_NAME} math)
 target_link_libraries(${PROJECT_NAME} logger)
 target_link_libraries(${PROJECT_NAME} glfw)

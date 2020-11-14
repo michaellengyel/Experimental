@@ -22,4 +22,9 @@ cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-master/modules ../opencv-mas
 cmake --build .   
 sudo make install   
 
+Dependencies Data:   
+
+The project has a data dependencie of .csv files in the following location:   
+(Currently not included due to confidentiality reasons)
+../gacrux/res/scans/*.csv   
 

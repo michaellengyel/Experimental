@@ -2,6 +2,10 @@
 
 #include "math/Gaussian_Distribution.h"
 #include "logger/Logger.h"
+
+#include "io/Preprocessor.h"
+#include "io/Scan.h"
+
 #include <GLFW/glfw3.h>
 
 #include <opencv2/opencv.hpp>
@@ -38,7 +42,7 @@ int main() {
     // Testing OpenCV dependence integration...
 
     cv::Mat image;
-    image = cv::imread("../gacrux/res/matrix.jpg");
+    image = cv::imread("../gacrux/res/images/matrix.jpg");
 
     if(! image.data ) {
         std::cout <<  "Could not open or find the image" << std::endl ;
@@ -50,6 +54,15 @@ int main() {
 
     std::cout << "Press any key to continue..." << std::endl;
     cv::waitKey(0);
+
+    // Testing lidar data IO...
+
+    // Declaring data container and handling classes
+    IOHandler ioHandler("../gacrux/res/scans/4.csv");
+    Scan scan;
+
+    // Declaring data processing classes
+    Preprocessor preprocessor(scan, ioHandler);
 
     // Testing GLFW module...
 
