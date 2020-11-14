@@ -4,6 +4,12 @@
 #include "logger/Logger.h"
 #include <GLFW/glfw3.h>
 
+#include "opencv2/core.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/face.hpp"
+#include "opencv2/imgproc.hpp"
+
+
 int main() {
 
     // Testing Math module...

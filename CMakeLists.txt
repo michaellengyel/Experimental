@@ -5,6 +5,7 @@ project(Experimental)
 
 # set the C++ standard
 set(CMAKE_CXX_STANDARD 14)
+set(OpenCV_DIR /home/michael/libraries/build)
 
 # adding subdirectories
 add_subdirectory(gacrux)
@@ -25,3 +26,36 @@ target_link_directories(${PROJECT_NAME} PRIVATE gacrux/vendor/glfw/src)
 target_link_libraries(${PROJECT_NAME} math)
 target_link_libraries(${PROJECT_NAME} logger)
 target_link_libraries(${PROJECT_NAME} glfw)
+
+# Linking OpenCV to project
+find_package( OpenCV REQUIRED )
+set(OpenCV_DIR "/usr/local/include/opencv")
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(Experimental ${OpenCV_LIBS})
+
+#set(OpenCV_DIR /home/michael/libraries/opencv-master/include/opencv2)
+#include_directories(${OpenCV_INCLUDE_DIR})
+#link_directories(${OpenCV_LINK_DIR})
+#target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+
+#set(OpenCV_DIR /home/michael/libraries/build)
+
+#set(OpenCV_INCLUDE_DIRS
+#        /home/michael/libraries/opencv-master/include
+#        /home/michael/libraries/opencv-contrib-master/include
+#        /home/michael/libraries/build/include
+#        )
+#
+#set(OpenCV_LIB_DIR
+#        /home/michael/libraries/build/lib
+#        )
+#
+#set(OpenCV_LIBS
+#        opencv_core
+#        opencv_highgui
+#        opencv_imgcodecs
+#        )
+#
+#include_directories(${OpenCV_INCLUDE_DIRS})
+#link_directories(${OpenCV_LIB_DIR})
+#target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
