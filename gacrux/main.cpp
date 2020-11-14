@@ -4,11 +4,12 @@
 #include "logger/Logger.h"
 #include <GLFW/glfw3.h>
 
-#include "opencv2/core.hpp"
-#include "opencv2/highgui.hpp"
+#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 #include "opencv2/face.hpp"
 #include "opencv2/imgproc.hpp"
-
 
 int main() {
 
@@ -34,6 +35,22 @@ int main() {
     Logger logger;
     logger.log("Logger working as expected");
 
+    // Testing OpenCV dependence integration...
+
+    cv::Mat image;
+    image = cv::imread("../gacrux/res/matrix.jpg");
+
+    if(! image.data ) {
+        std::cout <<  "Could not open or find the image" << std::endl ;
+        return -1;
+    }
+
+    cv::namedWindow("OpenCV Window", cv::WINDOW_AUTOSIZE);
+    cv::imshow("OpenCV Window", image);
+
+    std::cout << "Press any key to continue..." << std::endl;
+    cv::waitKey(0);
+
     // Testing GLFW module...
 
     GLFWwindow *window;
@@ -43,7 +60,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    window = glfwCreateWindow(680, 460, "test", NULL, NULL);
+    window = glfwCreateWindow(680, 460, "GLFW Window", NULL, NULL);
     if(!window) {
         fprintf(stderr, "Failed to initialize GLFW\n");
         glfwTerminate();
