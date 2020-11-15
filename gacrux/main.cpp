@@ -84,10 +84,13 @@ int main() {
 
     // ########## Testing Image Drawing module... ##########
 
-    cv::Mat grHistogram(640, 640, CV_8UC3, cv::Scalar(0, 0, 0));
+    int imageSizeX = 840;
+    int imageSizeY = 1200;
+
+    cv::Mat grHistogram(imageSizeX, imageSizeY, CV_8UC3, cv::Scalar(0, 0, 0));
 
     for (int i = 0; i < scan.m_data.size(); i++) {
-        MyLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos));
+        MyLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2));
     }
 
     if(! grHistogram.data ) {

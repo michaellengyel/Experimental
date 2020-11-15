@@ -30,12 +30,12 @@ enum class algoParameters : int
 	MIN_INTENSITY = 0,
 	MAX_INTENSITY = 255,
 
-	MAX_X = 20,
-	MIN_X = -20,
-	MAX_Y = 30,
-	MIN_Y = -20,
-	MAX_Z = 20,
-	MIN_Z = -20,
+	MAX_X = 50,
+	MIN_X = -50,
+	MAX_Y = 50,
+	MIN_Y = -50,
+	MAX_Z = 50,
+	MIN_Z = -50,
 
 	//LASER_ID = 0
 	USED_DUPLICATE = 0, // Which duplicate to use
@@ -49,6 +49,6 @@ enum class vehicleParameters : unsigned int
 
 constexpr bool g_filterDuplicateReturn = true; // Turn filtering of duplicates on and off
 
-constexpr int g_points = 80000; // TODO: Refactor logic
+constexpr int g_points = 120000; // TODO: Refactor logic
 
 #endif // !ENUMERATIONS

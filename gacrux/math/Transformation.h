@@ -5,6 +5,8 @@
 #ifndef EXPERIMENTAL_TRANSFORMATION_H
 #define EXPERIMENTAL_TRANSFORMATION_H
 
+#include <math.h>
+
 #include "../math/Transformation.h"
 #include "../io/Scan.h"
 
