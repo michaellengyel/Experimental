@@ -48,7 +48,7 @@ public:
 
 		}
 
-		const Point m_point;
+		Point m_point;
 		const double m_luminosity = 0;
 		const double m_distance = 0;
 

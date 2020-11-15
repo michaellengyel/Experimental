@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "math/Gaussian_Distribution.h"
+#include "math/Transformation.h"
 #include "logger/Logger.h"
 
 #include "io/Preprocessor.h"
@@ -15,9 +16,20 @@
 #include "opencv2/face.hpp"
 #include "opencv2/imgproc.hpp"
 
+void MyLine( cv::Mat img, cv::Point start, cv::Point end ) {
+    int thickness = 1;
+    int lineType = cv::LINE_8;
+    line( img,
+          start,
+          end,
+          cv::Scalar( 0, 255, 0 ),
+          thickness,
+          lineType );
+}
+
 int main() {
 
-    // Testing Math module...
+    // ########## Testing Math module... ##########
 
     std::cout << "Test code running..." << std::endl;
 
@@ -34,12 +46,12 @@ int main() {
     std::cout << "Output of sigma multiplication: " << output2.getSigma() << std::endl;
     std::cout << "Output of mu multiplication: " << output2.getMu() << std::endl;
 
-    // Testing Logging module...
+    // ########## Testing Logging module... ##########
 
     Logger logger;
     logger.log("Logger working as expected");
 
-    // Testing OpenCV dependence integration...
+    //  ##########Testing OpenCV dependence integration... ##########
 
     cv::Mat image;
     image = cv::imread("../gacrux/res/images/matrix.jpg");
@@ -53,9 +65,9 @@ int main() {
     cv::imshow("OpenCV Window", image);
 
     std::cout << "Press any key to continue..." << std::endl;
-    cv::waitKey(0);
+    //cv::waitKey(0);
 
-    // Testing lidar data IO...
+    // ########## Testing lidar data IO... ##########
 
     // Declaring data container and handling classes
     IOHandler ioHandler("../gacrux/res/scans/4.csv");
@@ -64,7 +76,32 @@ int main() {
     // Declaring data processing classes
     Preprocessor preprocessor(scan, ioHandler);
 
-    // Testing GLFW module...
+    // ########## Testing Transformation module... ##########
+
+    Transformation transformation(scan);
+    transformation.projection();
+    transformation.interpolation();
+
+    // ########## Testing Image Drawing module... ##########
+
+    cv::Mat grHistogram(640, 640, CV_8UC3, cv::Scalar(0, 0, 0));
+
+    for (int i = 0; i < scan.m_data.size(); i++) {
+        MyLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos));
+    }
+
+    if(! grHistogram.data ) {
+        std::cout <<  "Could not open or find the image" << std::endl ;
+        return -1;
+    }
+
+    cv::namedWindow("OpenCV Drawing", cv::WINDOW_AUTOSIZE);
+    cv::imshow("OpenCV Drawing", grHistogram);
+
+    std::cout << "Press any key to continue..." << std::endl;
+    cv::waitKey(0);
+
+    // ########## Testing GLFW module... ##########
 
     GLFWwindow *window;
 
