@@ -3,29 +3,12 @@
 #include "math/Gaussian_Distribution.h"
 #include "math/Transformation.h"
 #include "logger/Logger.h"
+#include "visualization/Artist.h"
 
 #include "io/Preprocessor.h"
 #include "io/Scan.h"
 
 #include <GLFW/glfw3.h>
-
-#include <opencv2/opencv.hpp>
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/highgui.hpp>
-#include "opencv2/face.hpp"
-#include "opencv2/imgproc.hpp"
-
-void MyLine( cv::Mat img, cv::Point start, cv::Point end ) {
-    int thickness = 1;
-    int lineType = cv::LINE_8;
-    line( img,
-          start,
-          end,
-          cv::Scalar( 0, 255, 0 ),
-          thickness,
-          lineType );
-}
 
 int main() {
 
@@ -79,18 +62,24 @@ int main() {
     // ########## Testing Transformation module... ##########
 
     Transformation transformation(scan);
-    transformation.projection();
+    //transformation.projection();
+    transformation.projection2(600, 1800);
     transformation.interpolation();
+
+    // ########## Testing Artist OpenCV module... ##########
+    
+    Artist artist;
 
     // ########## Testing Image Drawing module... ##########
 
-    int imageSizeX = 840;
-    int imageSizeY = 1200;
+    int imageSizeX = 600;
+    int imageSizeY = 1800;
 
     cv::Mat grHistogram(imageSizeX, imageSizeY, CV_8UC3, cv::Scalar(0, 0, 0));
 
     for (int i = 0; i < scan.m_data.size(); i++) {
-        MyLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2));
+        //artist.drawLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), scan.m_data.at(i).m_point.m_zPos);
+        artist.drawLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), scan.m_data.at(i).m_point.m_zPos);
     }
 
     if(! grHistogram.data ) {

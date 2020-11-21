@@ -14,7 +14,7 @@ add_subdirectory(gacrux/vendor/glfw)
 # declaring the math library
 
 # add the executable
-add_executable(${PROJECT_NAME} gacrux/main.cpp)
+add_executable(${PROJECT_NAME} gacrux/main.cpp gacrux/visualization/Artist.cpp gacrux/visualization/Artist.h gacrux/visualization/Artist.h)
 
 # add include directories
 target_include_directories(${PROJECT_NAME} PUBLIC gacrux/vendor/glfw/include)
@@ -28,11 +28,11 @@ target_link_libraries(${PROJECT_NAME} math)
 target_link_libraries(${PROJECT_NAME} logger)
 target_link_libraries(${PROJECT_NAME} glfw)
 
-# Linking OpenCV to project
+# Linking OpenCV to project (NEEDED)
 find_package( OpenCV REQUIRED )
 set(OpenCV_DIR "/usr/local/include/opencv")
 include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(Experimental ${OpenCV_LIBS})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 #set(OpenCV_DIR /home/michael/libraries/opencv-master/include/opencv2)
 #include_directories(${OpenCV_INCLUDE_DIR})

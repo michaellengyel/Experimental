@@ -6,6 +6,7 @@
 #define EXPERIMENTAL_TRANSFORMATION_H
 
 #include <math.h>
+#include <vector>
 
 #include "../math/Transformation.h"
 #include "../io/Scan.h"
@@ -18,6 +19,8 @@ public:
     ~Transformation();
 
     void projection();
+
+    void projection2(double height, double width);
 
     void interpolation();
 

@@ -97,18 +97,42 @@ void Transformation::projection() {
         m_scan.m_data.at(i).m_point.m_zPos  = ((m_scan.m_data.at(i).m_point.m_xPos * D20) + (m_scan.m_data.at(i).m_point.m_yPos * D21) + (m_scan.m_data.at(i).m_point.m_zPos * D22));
     }
 
-    /*
-    int offset = 300;
-    int magnificaton = 10;
+}
 
-    int x = 0;
-    int y = 0;
+void Transformation::projection2(double height, double width) {
 
     for (int i = 0; i < m_scan.m_data.size(); i++) {
-        m_scan.m_data.at(i).m_point.m_xPos  = (m_scan.m_data.at(i).m_point.m_xPos * magnificaton + offset);
-        m_scan.m_data.at(i).m_point.m_yPos  = (m_scan.m_data.at(i).m_point.m_yPos * magnificaton + offset);
+
+        double x = m_scan.m_data.at(i).m_point.m_xPos;
+        double y = m_scan.m_data.at(i).m_point.m_yPos;
+        double z = m_scan.m_data.at(i).m_point.m_zPos;
+
+        double dist = (sqrt((pow(x, 2) + pow(y, 2) + pow(z, 2))));
+        double scaledX = 0;
+        if (x > 0 && y > 0) {
+            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 90 ) * (width/360.0));// + (width/2);
+        } else if (x < 0 && y > 0) {
+            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 270 ) * (width/360.0));// + (width/2);
+        } else if (x < 0 && y < 0) {
+            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 270 ) * (width/360.0));// + (width/2);
+        } else if (x > 0 && y < 0) {
+            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 90 ) * (width/360.0));// + (width/2);
+        } else {
+            scaledX = 0;
+        }
+
+        // Calculate the scaled y (based on x and y)
+        double scaledY = 0;
+        scaledY = height - (z * 60 + height / 2);
+
+        // Calculate the scaled z (based on x, y, z)
+        double scaledZ = (sqrt((pow(x, 2) + pow(y, 2) + pow(z, 2)))) * 255/50;
+
+        m_scan.m_data.at(i).m_point.m_xPos = scaledX;
+        m_scan.m_data.at(i).m_point.m_yPos = scaledY;
+        m_scan.m_data.at(i).m_point.m_zPos = scaledZ;
     }
-    */
+
 }
 
 void Transformation::interpolation() {
