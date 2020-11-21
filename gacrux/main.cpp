@@ -34,22 +34,6 @@ int main() {
     Logger logger;
     logger.log("Logger working as expected");
 
-    //  ##########Testing OpenCV dependence integration... ##########
-
-    cv::Mat image;
-    image = cv::imread("../gacrux/res/images/matrix.jpg");
-
-    if(! image.data ) {
-        std::cout <<  "Could not open or find the image" << std::endl ;
-        return -1;
-    }
-
-    cv::namedWindow("OpenCV Window", cv::WINDOW_AUTOSIZE);
-    cv::imshow("OpenCV Window", image);
-
-    std::cout << "Press any key to continue..." << std::endl;
-    //cv::waitKey(0);
-
     // ########## Testing lidar data IO... ##########
 
     // Declaring data container and handling classes
@@ -67,31 +51,12 @@ int main() {
     transformation.interpolation();
 
     // ########## Testing Artist OpenCV module... ##########
-    
     Artist artist;
+    artist.renderPoints(scan, 600, 1800, "360 Degree LIDAR Visualization");
 
-    // ########## Testing Image Drawing module... ##########
-
-    int imageSizeX = 600;
-    int imageSizeY = 1800;
-
-    cv::Mat grHistogram(imageSizeX, imageSizeY, CV_8UC3, cv::Scalar(0, 0, 0));
-
-    for (int i = 0; i < scan.m_data.size(); i++) {
-        //artist.drawLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), cv::Point(scan.m_data.at(i).m_point.m_xPos + imageSizeY/2, scan.m_data.at(i).m_point.m_yPos + imageSizeX/2), scan.m_data.at(i).m_point.m_zPos);
-        artist.drawLine(grHistogram, cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), cv::Point(scan.m_data.at(i).m_point.m_xPos, scan.m_data.at(i).m_point.m_yPos), scan.m_data.at(i).m_point.m_zPos);
-    }
-
-    if(! grHistogram.data ) {
-        std::cout <<  "Could not open or find the image" << std::endl ;
-        return -1;
-    }
-
-    cv::namedWindow("OpenCV Drawing", cv::WINDOW_AUTOSIZE);
-    cv::imshow("OpenCV Drawing", grHistogram);
-
-    std::cout << "Press any key to continue..." << std::endl;
-    cv::waitKey(0);
+    //  ########## Testing OpenCV dependence integration... ##########
+    Artist artist_image;
+    artist_image.renderImage("../gacrux/res/images/matrix.jpg", "Reality");
 
     // ########## Testing GLFW module... ##########
 
