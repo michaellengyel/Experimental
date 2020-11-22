@@ -10,6 +10,7 @@
 
 #include "../math/Transformation.h"
 #include "../io/Scan.h"
+#include "../visualization/Points_2D.h"
 
 class Transformation {
 public:
@@ -18,9 +19,9 @@ public:
 
     ~Transformation();
 
-    void projection();
+    void projection(Points_2D& points_2D, double height, double width);
 
-    void projection2(double height, double width);
+    void projection2(Points_2D& points_2D, double height, double width);
 
     void interpolation();
 

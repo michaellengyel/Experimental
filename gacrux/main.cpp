@@ -4,6 +4,7 @@
 #include "math/Transformation.h"
 #include "logger/Logger.h"
 #include "visualization/Artist.h"
+#include "visualization/Points_2D.h"
 
 #include "io/Preprocessor.h"
 #include "io/Scan.h"
@@ -40,19 +41,25 @@ int main() {
     IOHandler ioHandler("../gacrux/res/scans/4.csv");
     Scan scan;
 
+    Points_2D points_2D_360;
+    Points_2D points_2D_3D;
+
     // Declaring data processing classes
     Preprocessor preprocessor(scan, ioHandler);
 
     // ########## Testing Transformation module... ##########
 
     Transformation transformation(scan);
-    //transformation.projection();
-    transformation.projection2(600, 1800);
+    transformation.projection2(points_2D_360, 600, 1800);
+    transformation.projection(points_2D_3D, 600, 800);
     transformation.interpolation();
 
     // ########## Testing Artist OpenCV module... ##########
-    Artist artist;
-    artist.renderPoints(scan, 600, 1800, "360 Degree LIDAR Visualization");
+    Artist artist_points_2D;
+    artist_points_2D.renderPoints(points_2D_360, 600, 1800, "360 Degree LIDAR Visualization");
+
+    Artist artist_points_3D;
+    artist_points_3D.renderPoints(points_2D_3D, 600, 800, "Projected LIDAR Visualization");
 
     //  ########## Testing OpenCV dependence integration... ##########
     Artist artist_image;

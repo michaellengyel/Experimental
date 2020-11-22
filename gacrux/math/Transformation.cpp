@@ -8,10 +8,10 @@ Transformation::~Transformation() {
 
 }
 
-void Transformation::projection() {
+void Transformation::projection(Points_2D& points_2D, double height, double width) {
 
     //Translations
-    double translationXYZ = 10;
+    double translationXYZ = 0;
 
     double offsetX = 0;
     double offsetY = 0;
@@ -60,7 +60,7 @@ void Transformation::projection() {
     double C22 = (cos(thetaY * 3.141592653589793 / 180.0));
 
     // Rotations X
-    double thetaX = 0;
+    double thetaX = 30;
 
     double D00 = 1;
     double D01 = 0;
@@ -76,30 +76,41 @@ void Transformation::projection() {
 
     for (int i = 0; i < m_scan.m_data.size(); i++) {
 
+        double x = m_scan.m_data.at(i).m_point.m_xPos;
+        double y = m_scan.m_data.at(i).m_point.m_yPos;
+        double z = m_scan.m_data.at(i).m_point.m_zPos;
+
         // Translations
-        m_scan.m_data.at(i).m_point.m_xPos  = ((m_scan.m_data.at(i).m_point.m_xPos * A00) + (m_scan.m_data.at(i).m_point.m_yPos * A01) + (m_scan.m_data.at(i).m_point.m_zPos * A02));
-        m_scan.m_data.at(i).m_point.m_yPos  = ((m_scan.m_data.at(i).m_point.m_xPos * A10) + (m_scan.m_data.at(i).m_point.m_yPos * A11) + (m_scan.m_data.at(i).m_point.m_zPos * A12));
-        m_scan.m_data.at(i).m_point.m_zPos  = ((m_scan.m_data.at(i).m_point.m_xPos * A20) + (m_scan.m_data.at(i).m_point.m_yPos * A21) + (m_scan.m_data.at(i).m_point.m_zPos * A22));
+        x  += ((x * A00) + (y * A01) + (z * A02));
+        y  += ((x * A10) + (y * A11) + (z * A12));
+        z  += ((x * A20) + (y * A21) + (z * A22));
 
         // Rotations Z
-        m_scan.m_data.at(i).m_point.m_xPos  = ((m_scan.m_data.at(i).m_point.m_xPos * B00) + (m_scan.m_data.at(i).m_point.m_yPos * B01) + (m_scan.m_data.at(i).m_point.m_zPos * B02));
-        m_scan.m_data.at(i).m_point.m_yPos  = ((m_scan.m_data.at(i).m_point.m_xPos * B10) + (m_scan.m_data.at(i).m_point.m_yPos * B11) + (m_scan.m_data.at(i).m_point.m_zPos * B12));
-        m_scan.m_data.at(i).m_point.m_zPos  = ((m_scan.m_data.at(i).m_point.m_xPos * B20) + (m_scan.m_data.at(i).m_point.m_yPos * B21) + (m_scan.m_data.at(i).m_point.m_zPos * B22));
+        x  += ((x * B00) + (y * B01) + (z * B02));
+        y  += ((x * B10) + (y * B11) + (z * B12));
+        z  += ((x * B20) + (y * B21) + (z * B22));
 
         // Rotations Y
-        m_scan.m_data.at(i).m_point.m_xPos  = ((m_scan.m_data.at(i).m_point.m_xPos * C00) + (m_scan.m_data.at(i).m_point.m_yPos * C01) + (m_scan.m_data.at(i).m_point.m_zPos * C02));
-        m_scan.m_data.at(i).m_point.m_yPos  = ((m_scan.m_data.at(i).m_point.m_xPos * C10) + (m_scan.m_data.at(i).m_point.m_yPos * C11) + (m_scan.m_data.at(i).m_point.m_zPos * C12));
-        m_scan.m_data.at(i).m_point.m_zPos  = ((m_scan.m_data.at(i).m_point.m_xPos * C20) + (m_scan.m_data.at(i).m_point.m_yPos * C21) + (m_scan.m_data.at(i).m_point.m_zPos * C22));
+        x  += ((x * C00) + (y * C01) + (z * C02));
+        y  += ((x * C10) + (y * C11) + (z * C12));
+        z  += ((x * C20) + (y * C21) + (z * C22));
 
         // Rotations X
-        m_scan.m_data.at(i).m_point.m_xPos  = ((m_scan.m_data.at(i).m_point.m_xPos * D00) + (m_scan.m_data.at(i).m_point.m_yPos * D01) + (m_scan.m_data.at(i).m_point.m_zPos * D02));
-        m_scan.m_data.at(i).m_point.m_yPos  = ((m_scan.m_data.at(i).m_point.m_xPos * D10) + (m_scan.m_data.at(i).m_point.m_yPos * D11) + (m_scan.m_data.at(i).m_point.m_zPos * D12));
-        m_scan.m_data.at(i).m_point.m_zPos  = ((m_scan.m_data.at(i).m_point.m_xPos * D20) + (m_scan.m_data.at(i).m_point.m_yPos * D21) + (m_scan.m_data.at(i).m_point.m_zPos * D22));
+        x  += ((x * D00) + (y * D01) + (z * D02));
+        y  += ((x * D10) + (y * D11) + (z * D12));
+        z  += ((x * D20) + (y * D21) + (z * D22));
+
+        // Fix offset of image:
+        x += width/2;
+        y += height/2;
+
+        points_2D.m_points_2D_vec.push_back(Points_2D::Point_2D(static_cast<int>(x), static_cast<int>(y), static_cast<uint8_t>(0)));
+
     }
 
 }
 
-void Transformation::projection2(double height, double width) {
+void Transformation::projection2(Points_2D& points_2D, double height, double width) {
 
     for (int i = 0; i < m_scan.m_data.size(); i++) {
 
@@ -128,9 +139,8 @@ void Transformation::projection2(double height, double width) {
         // Calculate the scaled z (based on x, y, z)
         double scaledZ = (sqrt((pow(x, 2) + pow(y, 2) + pow(z, 2)))) * 255/50;
 
-        m_scan.m_data.at(i).m_point.m_xPos = scaledX;
-        m_scan.m_data.at(i).m_point.m_yPos = scaledY;
-        m_scan.m_data.at(i).m_point.m_zPos = scaledZ;
+        points_2D.m_points_2D_vec.push_back(Points_2D::Point_2D(static_cast<int>(scaledX), static_cast<int>(scaledY), static_cast<uint8_t>(scaledZ)));
+
     }
 
 }
