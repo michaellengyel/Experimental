@@ -112,24 +112,44 @@ void Transformation::projection(Points_2D& points_2D, double height, double widt
 
 void Transformation::projection2(Points_2D& points_2D, double height, double width) {
 
+    double scalingFactor = (static_cast<double>(width)/360.0);
+    double radToDeg = 180.0/3.141592653589793;
+
     for (int i = 0; i < m_scan.m_data.size(); i++) {
 
         double x = m_scan.m_data.at(i).m_point.m_xPos;
         double y = m_scan.m_data.at(i).m_point.m_yPos;
         double z = m_scan.m_data.at(i).m_point.m_zPos;
 
-        double dist = (sqrt((pow(x, 2) + pow(y, 2) + pow(z, 2))));
-        double scaledX = 0;
+        double dist = (sqrt((pow(x, 2) + pow(y, 2))));
+
+        double angleInRad = 0;
+        double angleInDeg = 0;
+        double angleWithOffset = 0;
+        double angleWithScaling = 0;
+
         if (x > 0 && y > 0) {
-            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 90 ) * (width/360.0));// + (width/2);
+            angleInRad = cosh(y/dist);
+            angleInDeg = angleInRad * radToDeg;
+            angleWithOffset = angleInDeg + 180;
+            angleWithScaling = angleWithOffset * scalingFactor;
         } else if (x < 0 && y > 0) {
-            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 270 ) * (width/360.0));// + (width/2);
+            angleInRad = cosh(y/dist);
+            angleInDeg = angleInRad * radToDeg;
+            angleWithOffset = 180 - angleInDeg;
+            angleWithScaling = angleWithOffset * scalingFactor;
         } else if (x < 0 && y < 0) {
-            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 270 ) * (width/360.0));// + (width/2);
+            angleInRad = cosh(y/dist);
+            angleInDeg = angleInRad * radToDeg;
+            angleWithOffset = 90 - angleInDeg;
+            angleWithScaling = angleWithOffset * scalingFactor;
         } else if (x > 0 && y < 0) {
-            scaledX = (((sinh(y/dist) * (180.0/3.141592653589793)) + 90 ) * (width/360.0));// + (width/2);
+            angleInRad = cosh(y/dist);
+            angleInDeg = angleInRad * radToDeg;
+            angleWithOffset = angleInDeg + 270;
+            angleWithScaling = angleWithOffset * scalingFactor;
         } else {
-            scaledX = 0;
+            angleWithScaling = 0;
         }
 
         // Calculate the scaled y (based on x and y)
@@ -139,7 +159,7 @@ void Transformation::projection2(Points_2D& points_2D, double height, double wid
         // Calculate the scaled z (based on x, y, z)
         double scaledZ = (sqrt((pow(x, 2) + pow(y, 2) + pow(z, 2)))) * 255/50;
 
-        points_2D.m_points_2D_vec.push_back(Points_2D::Point_2D(static_cast<int>(scaledX), static_cast<int>(scaledY), static_cast<uint8_t>(scaledZ)));
+        points_2D.m_points_2D_vec.push_back(Points_2D::Point_2D(static_cast<int>(angleWithScaling), static_cast<int>(scaledY), static_cast<uint8_t>(scaledZ)));
 
     }
 
