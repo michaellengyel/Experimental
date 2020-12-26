@@ -9,6 +9,8 @@ Setting up cmake to include subrepositories and making .sh scripts
 https://www.youtube.com/watch?v=ED-WUk440qc   
 Building opencv from src on Ubuntu (Build with opencv_contrib)   
 https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html   
+Running project with Visual Studio Code   
+https://www.youtube.com/watch?v=wP4cwAtU-g8   
 
 Dependencies Quick Guide:   
 
